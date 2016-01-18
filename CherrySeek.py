@@ -13,12 +13,15 @@ import CherryPipelines
     
 def finalise_file(file):
     with open(file,'ab+') as f:
-        f.write('{}]')
+        f.seek(-2, os.SEEK_END)
+        f.truncate()
+        f.write(']')
 
 index = int(sys.argv[1])
-subdir = 'data'
+subdir = 'rsc'
+source_file = 'RSC.json'
 
-with open('uk depts.json','r') as f:
+with open(source_file,'r') as f:
     j = json.load(f)
     subdir = subdir+'/'+j[index]['name']
     outfile= subdir+ '/'+'urls.json'
